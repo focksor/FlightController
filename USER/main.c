@@ -1,38 +1,18 @@
 #include "flight.h"
 
-
-int main(void){
-	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2); //设置NVIC中断分组2:2位抢占优先级，2位响应优先级
-	uart_init(115200);	 //串口初始化为115200
-	delay_init();
-	LCD_Init();		
-	IIC_GPIO_Config();
-	MPU9250_Init();
-	show_Init();
+int main(void){	
+	Init_All();
+	
+	printf("FlightController is running.\r\nUAV is always ready to fall like a salted fish without dream.\n");
 	
 	while(1){
-		showData();
+		READ_MPU9250_ACCEL();
+//		READ_MPU9250_GYRO();
+//		READ_MPU9250_MAG();
+
+//		printf("{B%d:%d:%d:%d:%d}$",(int)((GYRO_X-GYROxIdle)*1000),(int)((GYRO_Y-GYROyIdle)*1000),(int)((GYRO_Z-GYROzIdle)*1000),0,0);
+		printf("{B%d:%d:%d:%d:%d}$",(int)(Pitch_Sensor*1000),(int)(Roll_Sensor*1000),(int)(Yaw_Sensor*1000),(int)((GYRO_X-GYROxIdle)*1000),(int)((GYRO_Y-GYROyIdle)*1000));
+//		printf("{B%d:%d:%d:%d:%d}$",(int)(MOTOR1_Def),(int)(MOTOR2_Def),(int)(MOTOR3_Def),(int)(MOTOR4_Def),(int)(MOTOR4_Def));
+		delay_ms(50);
 	}
 }
-
-/*
-{
-__电机驱动
-	MOTOR_Init();
-	MOTOR_Write(-100, -100, -100, -100);//电机初始化
-	delay_ms(1500);
-	 
-	MOTOR_Write(100, 200, 300, 400);
-}
-*/
-
-/*
-{
-__LCD驱动
-	LCD_Init();
-	
-	POINT_COLOR=RED;
-	LCD_ShowString(60,50,200,16,16,"WarShip STM32");	
-}
-*/
-

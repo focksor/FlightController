@@ -1,0 +1,25 @@
+电机接线：
+	电机1：右前方->GPIOB_6
+	电机2：左后方->GPIOB_7
+	电机3：左前方->GPIOB_8
+	电机4：右后方->GPIOB_9
+
+MPU9250(加速度计，陀螺仪，磁力计),气压计：
+	IIC_SCL->PGIOB_12
+	IIC_SDA->GPIOB_13
+
+遥控器：
+	RC->GPIOA_6
+
+蓝牙模块：
+	RXD->TXD
+	TXD->RXD
+
+中断：
+	定时器：
+		TIM2:调整UAV状态
+		TIM3:用于遥控器通道重置
+		TIM4：用于给电调输出PWM信号
+
+	外部中断：
+		GPIOA_6:记录遥控器通道

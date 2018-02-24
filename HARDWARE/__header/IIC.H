@@ -1,33 +1,47 @@
-#ifndef __IIC_H
-#define __IIC_H
-
+#ifndef __MPUIIC_H
+#define __MPUIIC_H
+#include "sys.h"
 #include "config.h"
-#include "stm32f10x.h"
+//////////////////////////////////////////////////////////////////////////////////	 
+//±¾³ÌÐòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßÐí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+//ALIENTEKÕ½½¢STM32¿ª·¢°åV3
+//MPU6050 IICÇý¶¯ ´úÂë	   
+//ÕýµãÔ­×Ó@ALIENTEK
+//¼¼ÊõÂÛÌ³:www.openedv.com
+//´´½¨ÈÕÆÚ:2015/1/17
+//°æ±¾£ºV1.0
+//°æÈ¨ËùÓÐ£¬µÁ°æ±Ø¾¿¡£
+//Copyright(C) ¹ãÖÝÊÐÐÇÒíµç×Ó¿Æ¼¼ÓÐÏÞ¹«Ë¾ 2009-2019
+//All rights reserved									  
+//////////////////////////////////////////////////////////////////////////////////
 
-//************************************
-/*æ¨¡æ‹ŸIICç«¯å£è¾“å‡ºè¾“å…¥å®šä¹‰*/
-#define SCL_H         GPIOB->BSRR = __IIC_SCL_Pin
-#define SCL_L         GPIOB->BRR  = __IIC_SCL_Pin 
-   
-#define SDA_H         GPIOB->BSRR = __IIC_SDA_Pin
-#define SDA_L         GPIOB->BRR  = __IIC_SDA_Pin
 
-#define SCL_read      GPIOB->IDR  & __IIC_SCL_Pin
-#define SDA_read      GPIOB->IDR  & __IIC_SDA_Pin
+//IO·½ÏòÉèÖÃ
+#define MPU_SDA_IN()  {GPIOB->CRH&=0XFF0FFFFF;GPIOB->CRH|=8<<20;}
+#define MPU_SDA_OUT() {GPIOB->CRH&=0XFF0FFFFF;GPIOB->CRH|=3<<20;}
 
-typedef enum {FALSE = 0, TRUE = !FALSE} bool;
+//IO²Ù×÷º¯Êý	 
+#define MPU_IIC_SCL    PBout(12) 		//SCL
+#define MPU_IIC_SDA    PBout(13) 		//SDA	 
+#define MPU_READ_SDA   PBin(13) 		//ÊäÈëSDA 
 
-void IIC_GPIO_Config(void);
-void IIC_delay(void);
-bool IIC_Start(void);
-void IIC_Stop(void);
-void IIC_Ack(void);
-void IIC_NoAck(void);
-bool IIC_WaitAck(void); 	 //è¿”å›žä¸º:=1æœ‰ACK,=0æ— ACK
-void IIC_SendByte(u8 SendByte); //æ•°æ®ä»Žé«˜ä½åˆ°ä½Žä½//
-unsigned char IIC_RadeByte(void);  //æ•°æ®ä»Žé«˜ä½åˆ°ä½Žä½//
-bool Single_Write(unsigned char SlaveAddress,unsigned char REG_Address,unsigned char REG_data);		     //void
+
+#define SCL_read      GPIOB->IDR  & SCL_PIN /* GPIO_ReadInputDataBit(GPIOB , GPIO_Pin_10) */
+#define SDA_read      GPIOB->IDR  & SDA_PIN /* GPIO_ReadInputDataBit(GPIOB , GPIO_Pin_11) */
+#define SCL_PIN        GPIO_Pin_12
+#define SDA_PIN        GPIO_Pin_13
+//IICËùÓÐ²Ù×÷º¯Êý
+void MPU_IIC_Delay(void);				//MPU IICÑÓÊ±º¯Êý
+void MPU_IIC_Init(void);                //³õÊ¼»¯IICµÄIO¿Ú				 
+void MPU_IIC_Start(void);				//·¢ËÍIIC¿ªÊ¼ÐÅºÅ
+void MPU_IIC_Stop(void);	  			//·¢ËÍIICÍ£Ö¹ÐÅºÅ
+void MPU_IIC_Send_Byte(u8 txd);			//IIC·¢ËÍÒ»¸ö×Ö½Ú
+u8 MPU_IIC_Read_Byte(unsigned char ack);//IIC¶ÁÈ¡Ò»¸ö×Ö½Ú
+u8 MPU_IIC_Wait_Ack(void); 				//IICµÈ´ýACKÐÅºÅ
+void MPU_IIC_Ack(void);					//IIC·¢ËÍACKÐÅºÅ
+void MPU_IIC_NAck(void);				//IIC²»·¢ËÍACKÐÅºÅ
+
+bool Single_Write(unsigned char SlaveAddress,unsigned char REG_Address,unsigned char REG_data);
 unsigned char Single_Read(unsigned char SlaveAddress,unsigned char REG_Address);
-void delay5ms(void);
 
 #endif
