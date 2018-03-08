@@ -33,6 +33,8 @@ void calcPid(PidObject *APidObject,float exp,float data_now){
 	APidObject->Dout = APidObject->Kd * APidObject->derivative;
 	
 	APidObject->output = APidObject->Pout + APidObject->Iout + APidObject->Dout;	
+	
+	APidObject->PreErr = APidObject->Err;
 }
 
 float DataLimit(float in,float Upper,float Lower){

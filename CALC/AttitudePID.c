@@ -10,19 +10,19 @@ PidObject pidPitchAngularRate;
 PidObject pidRollAngularRate;
 PidObject pidYawAngularRate;
 
-//PidConfig pidPitchAngleConfig = 		{0,0.0,0};
-//PidConfig pidRollAngleConfig = 			{-0,-0.0,-0.00};
-//PidConfig pidYawAngleConfig = 			{0,0.0,0};
-//PidConfig pidPitchAngularRateConfig =	{0.0,0.0,0.00};
-//PidConfig pidRollAngularRateConfig = 	{0.0,0.0,0.00};
-//PidConfig pidYawAngularRateConfig = 	{0,0,0.0};
+PidConfig pidPitchAngleConfig = 		{0,0.0,0};
+PidConfig pidRollAngleConfig = 			{0,-0.0,-0.00};
+PidConfig pidYawAngleConfig = 			{0,0.0,0};
+PidConfig pidPitchAngularRateConfig =	{0.135,0.09,0.00};
+PidConfig pidRollAngularRateConfig = 	{0,0.0,0.0};
+PidConfig pidYawAngularRateConfig = 	{0,0,0.0};
 
-PidConfig pidPitchAngleConfig = 		{15,0.2,0};
-PidConfig pidRollAngleConfig = 			{6,0.1,0};
-PidConfig pidYawAngleConfig = 			{0,0,0};
-PidConfig pidPitchAngularRateConfig =	{0.135,0.09,0.0036};
-PidConfig pidRollAngularRateConfig = 	{0.135,0.09,0.0036};
-PidConfig pidYawAngularRateConfig = 	{0.18,0.018,0};
+//PidConfig pidPitchAngleConfig = 		{15,0,0};
+//PidConfig pidRollAngleConfig = 			{0,0,0};
+//PidConfig pidYawAngleConfig = 			{0,0,0};
+//PidConfig pidPitchAngularRateConfig =	{0.135,0.09,0.0036};
+//PidConfig pidRollAngularRateConfig = 	{0.135,0.09,0.0036};
+//PidConfig pidYawAngularRateConfig = 	{0,0,0};
 
 
 //PID OF PX4
@@ -36,11 +36,11 @@ PidConfig pidYawAngularRateConfig = 	{0.18,0.018,0};
 
 
 void InitSelfStability(void){
-	InitPidObject(&pidPitchAngle,pidPitchAngleConfig,33,-33,dTime);
-	InitPidObject(&pidRollAngle,pidRollAngleConfig,15,-15,dTime);
+	InitPidObject(&pidPitchAngle,pidPitchAngleConfig,330,-330,dTime);
+	InitPidObject(&pidRollAngle,pidRollAngleConfig,33,-33,dTime);
 	InitPidObject(&pidYawAngle,pidYawAngleConfig,360,0,dTime);
-	InitPidObject(&pidPitchAngularRate,pidPitchAngularRateConfig,35,-35,dTime);
-	InitPidObject(&pidRollAngularRate,pidRollAngularRateConfig,10,-10,dTime);
+	InitPidObject(&pidPitchAngularRate,pidPitchAngularRateConfig,350,-350,dTime);
+	InitPidObject(&pidRollAngularRate,pidRollAngularRateConfig,35,-35,dTime);
 	InitPidObject(&pidYawAngularRate,pidYawAngularRateConfig,360,-360,dTime);
 }
 void SelfStability(float Pitch_exp,float Roll_exp,float Yaw_exp){	
@@ -55,7 +55,8 @@ void SelfStability(float Pitch_exp,float Roll_exp,float Yaw_exp){
 void calcPidSelfStability(float Pitch_exp,float Roll_exp,float Yaw_exp,
 						  float Pitch_now,float Roll_now,float Yaw_now,
 						  float GYROx_now,float GYROy_now,float GYROz_now,
-						  float *Pitch_Pid,float *Roll_Pid,float *Yaw_Pid) {	
+						  float *Pitch_Pid,float *Roll_Pid,float *Yaw_Pid) {
+	//串级PID实现自稳。外环角度，内环角速度。	
 	calcPid(&pidPitchAngle,Pitch_exp,Pitch_now);
 	calcPid(&pidRollAngle,Roll_exp,Roll_now);
 	calcPid(&pidYawAngle,Yaw_exp,Yaw_now);
