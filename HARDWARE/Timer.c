@@ -107,7 +107,12 @@ void TIM5_IRQHandler(void){//T=20000us,20ms
 		CalcRoll(1);
 		CalcYaw(1);
 		
-		SelfStability(0,0,0);
+		SelfStability(0, 0, 0);
+        
+        MOTOR1_Def += 100;
+        MOTOR2_Def += 100;
+        MOTOR3_Def += 100;
+        MOTOR4_Def += 100;        
 		
 		//设前倾，右滚，顺时针偏航为正方向。调整重心。
 		MOTOR1_Def=Motor_PWM_Idle+RC3+Pitch_PID+Roll_PID-Yaw_PID;

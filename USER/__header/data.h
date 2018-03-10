@@ -13,5 +13,6 @@ extern float Pitch_PID,Roll_PID,Yaw_PID;
 
 extern float MOTOR1_Def,MOTOR2_Def,MOTOR3_Def,MOTOR4_Def;
 
+extern float gx_idle, gy_idle, gz_idle;
 
 #endif
