@@ -74,6 +74,12 @@ void TIM2_IRQHandler(void){//T=2000us
 		WithoutDream=!(RC_Com(7,600));//THE UAV WILL FALL LIKES A SALTED FISH WITHOUT DREAM
 		if(RC_Com(3,600)){//ONLY WHEN THE THROTTLE ON THE BOTTOM THE UAV CAN BE UNLOCKED
 			IfUnlock=RC_Com(6,1600);
+			pidPitchAngle.Integral	= 0;
+			pidRollAngle.Integral	= 0;
+			pidYawAngle.Integral	= 0;
+			pidPitchAngularRate.Integral	= 0;
+			pidRollAngularRate.Integral		= 0;
+			pidYawAngularRate.Integral		= 0;
 		}
 		
 		if(++Tim2Cntr>=40)//CHANGE LED TO SHOW THE STATE OF TIM2
@@ -110,10 +116,10 @@ void TIM5_IRQHandler(void){//T=20000us,20ms
 		SelfStability(0,0,0);
 		
 		//设前倾，右滚，顺时针偏航为正方向。调整重心。
-		MOTOR1_Def=Motor_PWM_Idle+RC3+Pitch_PID+Roll_PID-Yaw_PID;
-		MOTOR2_Def=Motor_PWM_Idle+RC3-Pitch_PID-Roll_PID-Yaw_PID;
-		MOTOR3_Def=Motor_PWM_Idle+RC3+Pitch_PID-Roll_PID+Yaw_PID;
-		MOTOR4_Def=Motor_PWM_Idle+RC3-Pitch_PID+Roll_PID+Yaw_PID;
+		MOTOR1_Def=Motor_PWM_Idle+RC3-Pitch_PID-Roll_PID+Yaw_PID;
+		MOTOR2_Def=Motor_PWM_Idle+RC3+Pitch_PID+Roll_PID+Yaw_PID;
+		MOTOR3_Def=Motor_PWM_Idle+RC3-Pitch_PID+Roll_PID-Yaw_PID;
+		MOTOR4_Def=Motor_PWM_Idle+RC3+Pitch_PID-Roll_PID-Yaw_PID;
 			
 		MOTOR_Set(MOTOR1_Def,MOTOR2_Def,MOTOR3_Def,MOTOR4_Def);
 		//MOTOR_Set(Motor_PWM_Idle+RC3,Motor_PWM_Idle+RC3,Motor_PWM_Idle+RC3,Motor_PWM_Idle+RC3);

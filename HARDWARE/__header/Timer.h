@@ -6,6 +6,8 @@
 #include "RM.h"
 #include "AttitudePID.h"
 #include "Attitude.h"
+#include "PID.h"
+#include "data.h"
 
 void Timer_Init(void);
 void TIM2_IRQHandler(void);//T=2000us,TIM2 MAINLY USED FOR CONTROLLING THE UAV'S ATTITUDE

@@ -10,17 +10,17 @@ PidObject pidPitchAngularRate;
 PidObject pidRollAngularRate;
 PidObject pidYawAngularRate;
 
-PidConfig pidPitchAngleConfig = 		{0,0.0,0};
-PidConfig pidRollAngleConfig = 			{0,-0.0,-0.00};
-PidConfig pidYawAngleConfig = 			{0,0.0,0};
-PidConfig pidPitchAngularRateConfig =	{0.135,0.09,0.00};
-PidConfig pidRollAngularRateConfig = 	{0,0.0,0.0};
-PidConfig pidYawAngularRateConfig = 	{0,0,0.0};
+PidConfig pidPitchAngleConfig = 		{2.1,0.00001,0.00003};
+PidConfig pidRollAngleConfig = 			{2.1,0.00001,0.00003};
+PidConfig pidYawAngleConfig = 			{0,0,0};
+PidConfig pidPitchAngularRateConfig =	{0.9,0.00002,0.00};
+PidConfig pidRollAngularRateConfig = 	{0.9,0.00002,0.00};
+PidConfig pidYawAngularRateConfig = 	{0.0,0.0,0};
 
-//PidConfig pidPitchAngleConfig = 		{15,0,0};
+//PidConfig pidPitchAngleConfig = 		{0,0,0};
 //PidConfig pidRollAngleConfig = 			{0,0,0};
 //PidConfig pidYawAngleConfig = 			{0,0,0};
-//PidConfig pidPitchAngularRateConfig =	{0.135,0.09,0.0036};
+//PidConfig pidPitchAngularRateConfig =	{0,0,0};
 //PidConfig pidRollAngularRateConfig = 	{0.135,0.09,0.0036};
 //PidConfig pidYawAngularRateConfig = 	{0,0,0};
 
@@ -36,17 +36,17 @@ PidConfig pidYawAngularRateConfig = 	{0,0,0.0};
 
 
 void InitSelfStability(void){
-	InitPidObject(&pidPitchAngle,pidPitchAngleConfig,330,-330,dTime);
-	InitPidObject(&pidRollAngle,pidRollAngleConfig,33,-33,dTime);
-	InitPidObject(&pidYawAngle,pidYawAngleConfig,360,0,dTime);
-	InitPidObject(&pidPitchAngularRate,pidPitchAngularRateConfig,350,-350,dTime);
-	InitPidObject(&pidRollAngularRate,pidRollAngularRateConfig,35,-35,dTime);
-	InitPidObject(&pidYawAngularRate,pidYawAngularRateConfig,360,-360,dTime);
+	InitPidObject(&pidPitchAngle,pidPitchAngleConfig,16,-16,dTime);
+	InitPidObject(&pidRollAngle,pidRollAngleConfig,16,-16,dTime);
+	InitPidObject(&pidYawAngle,pidYawAngleConfig,36,0,dTime);
+	InitPidObject(&pidPitchAngularRate,pidPitchAngularRateConfig,8,-8,dTime);
+	InitPidObject(&pidRollAngularRate,pidRollAngularRateConfig,8,-8,dTime);
+	InitPidObject(&pidYawAngularRate,pidYawAngularRateConfig,360,-36,dTime);
 }
 void SelfStability(float Pitch_exp,float Roll_exp,float Yaw_exp){	
 	calcPidSelfStability(Pitch_exp,Roll_exp,Yaw_exp,
-						 Pitch_Sensor,Roll_Sensor,Yaw_Sensor,
-						 GYRO_X-GYROxIdle,-(GYRO_Y-GYROyIdle),GYRO_Z-GYROzIdle,
+						 -Pitch_Sensor,-Roll_Sensor,Yaw_Sensor,
+						 -(GYRO_X-GYROxIdle),(GYRO_Y-GYROyIdle),-(GYRO_Z-GYROzIdle),
 						 &Pitch_PID,&Roll_PID,&Yaw_PID);
 }
 

@@ -7,7 +7,7 @@
 #include "RM.h"
 
 #define Motor_PWM_Period 2499		//PWM定时器溢出值
-#define Motor_PWM_Idle   999		//PWM底值
+#define Motor_PWM_Idle   999-170		//PWM底值
 
 extern unsigned char WithoutDream;
 extern unsigned char IfUnlock;
