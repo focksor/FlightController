@@ -15,7 +15,7 @@ void CalcPitch(unsigned char IfUseGYRO){
 	static float Pitch_Acc[3] = { 0 };
 	
 	if(IfUseGYRO){
-		Pitch_GYRO = (GYRO_X - GYROxIdle)*20/1000 + Pitch_Sensor;
+		Pitch_GYRO = (GYRO_X - gx_idle)*20/1000 + Pitch_Sensor;
 		Pitch_Sensor = Pitch_GYRO * 0.98 + Pitch_Accel * 0.02;
 	}
 	else{
@@ -30,7 +30,7 @@ void CalcRoll(unsigned char IfUseGYRO){
 	static float Roll_Acc[3] = { 0 };
 	
 	if(IfUseGYRO){
-		Roll_GYRO = (GYRO_Y - GYROyIdle)*20/1000 + Roll_Sensor;
+		Roll_GYRO = (GYRO_Y - gy_idle)*20/1000 + Roll_Sensor;
 		Roll_Sensor = Roll_GYRO * 0.85 + Roll_Accel * 0.15;
 	}
 	else{
@@ -42,7 +42,7 @@ void CalcRoll(unsigned char IfUseGYRO){
 
 void CalcYaw(unsigned char IfUseGYRO){
 	if(IfUseGYRO){
-		Yaw_GYRO += (GYRO_Z - GYROzIdle)*20/1000;
+		Yaw_GYRO += (GYRO_Z - gz_idle)*20/1000;
 		Yaw_Sensor = Yaw_GYRO;
 		if(abs((int)Yaw_GYRO) >= 360)
 			Yaw_GYRO = 0;
