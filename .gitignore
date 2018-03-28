@@ -1,0 +1,9 @@
+OBJ/
+*.crf
+*.o
+*.d
+*.hex
+*.bak
+*.map
+*.lst
+*._2i

@@ -13,8 +13,8 @@ PidObject pidYawAngularRate;
 PidConfig pidPitchAngleConfig = 		{0,0.000,0.000};
 PidConfig pidRollAngleConfig = 			{0,0.000,0.000};
 PidConfig pidYawAngleConfig = 			{0,0.0,0};
-PidConfig pidPitchAngularRateConfig =	{0.9,0.00002,0.000};
-PidConfig pidRollAngularRateConfig = 	{0.9,0.00002,000};
+PidConfig pidPitchAngularRateConfig =	{0.9,0.00002,0.000025};
+PidConfig pidRollAngularRateConfig = 	{0.9,0.00002,0.000025};
 PidConfig pidYawAngularRateConfig = 	{0.0,0.0,0};
 
 //PidConfig pidPitchAngleConfig = 		{0,0,0};
@@ -45,7 +45,7 @@ void InitSelfStability(void){
 }
 void SelfStability(float Pitch_exp,float Roll_exp,float Yaw_exp){	
 	calcPidSelfStability(Pitch_exp,Roll_exp,Yaw_exp,
-						 -Pitch_Sensor,Roll_Sensor,-Yaw_Sensor,
+						 -(Pitch_Sensor - 1.2),(Roll_Sensor - 2.6),-Yaw_Sensor,
 						 -(GYRO_X-GYROxIdle),(GYRO_Y-GYROyIdle),-(GYRO_Z-GYROzIdle),
 						 &Pitch_PID,&Roll_PID,&Yaw_PID);
 }
