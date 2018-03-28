@@ -9,8 +9,6 @@ float Acc_X,Acc_Y,Acc_Z;
 float GYRO_X,GYRO_Y,GYRO_Z;
 float MAG_X,MAG_Y,MAG_Z;
 
-float gx_idle, gy_idle, gz_idle;
-
 void MPU9250_Init(void){  
 	delay_init();
 	Single_Write(GYRO_ADDRESS,PWR_MGMT_1, 0x00);  //解除休眠状态

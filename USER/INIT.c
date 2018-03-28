@@ -8,7 +8,9 @@ void Init_All(void){
 	MOTOR_Init();
 	InitSelfStability();
 	MPU_IIC_Init();
+	delay_ms(200);
 	MPU9250_Init();
+	delay_ms(200);
 	EXTIX_Init();
 	Timer_Init();
 }
