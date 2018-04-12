@@ -7,6 +7,11 @@
 #include "mpu9250.h"
 #include "flight.h"
 
+extern float PitchIdle,RollIdle;
+extern float PitchIdle_All,RollIdle_All;
+extern long PitchIdleCntr,RollIdleCntr;
+
+
 void CalcAttitude(unsigned char IfUseGYRO);
 void CalcPitch(unsigned char IfUseGYRO);
 void CalcRoll(unsigned char IfUseGYRO);

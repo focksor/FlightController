@@ -7,3 +7,5 @@ OBJ/
 *.map
 *.lst
 *._2i
+USER/FlightController.uvguix.focks
+*.hex

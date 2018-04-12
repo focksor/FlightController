@@ -10,11 +10,11 @@ PidObject pidPitchAngularRate;
 PidObject pidRollAngularRate;
 PidObject pidYawAngularRate;
 
-PidConfig pidPitchAngleConfig = 		{0,0.000,0.000};
-PidConfig pidRollAngleConfig = 			{0,0.000,0.000};
+PidConfig pidPitchAngleConfig = 		{1.5,0.000028,0.00002};
+PidConfig pidRollAngleConfig = 			{1.5,0.000028,0.00002};
 PidConfig pidYawAngleConfig = 			{0,0.0,0};
-PidConfig pidPitchAngularRateConfig =	{0.9,0.00002,0.000025};
-PidConfig pidRollAngularRateConfig = 	{0.9,0.00002,0.000025};
+PidConfig pidPitchAngularRateConfig =	{0.9,0.00002,0.000018};
+PidConfig pidRollAngularRateConfig = 	{0.9,0.00002,0.000018};
 PidConfig pidYawAngularRateConfig = 	{0.0,0.0,0};
 
 //PidConfig pidPitchAngleConfig = 		{0,0,0};
@@ -36,16 +36,16 @@ PidConfig pidYawAngularRateConfig = 	{0.0,0.0,0};
 
 
 void InitSelfStability(void){
-	InitPidObject(&pidPitchAngle,pidPitchAngleConfig,16,-16,dTime);
-	InitPidObject(&pidRollAngle,pidRollAngleConfig,16,-16,dTime);
+	InitPidObject(&pidPitchAngle,pidPitchAngleConfig,50,-50,dTime);
+	InitPidObject(&pidRollAngle,pidRollAngleConfig,50,-50,dTime);
 	InitPidObject(&pidYawAngle,pidYawAngleConfig,36,0,dTime);
-	InitPidObject(&pidPitchAngularRate,pidPitchAngularRateConfig,16,-16,dTime);
-	InitPidObject(&pidRollAngularRate,pidRollAngularRateConfig,16,-16,dTime);
+	InitPidObject(&pidPitchAngularRate,pidPitchAngularRateConfig,6,-6,dTime);
+	InitPidObject(&pidRollAngularRate,pidRollAngularRateConfig,6,-6,dTime);
 	InitPidObject(&pidYawAngularRate,pidYawAngularRateConfig,36,-36,dTime);
 }
 void SelfStability(float Pitch_exp,float Roll_exp,float Yaw_exp){	
 	calcPidSelfStability(Pitch_exp,Roll_exp,Yaw_exp,
-						 -(Pitch_Sensor - 1.2),(Roll_Sensor - 2.6),-Yaw_Sensor,
+						 -(Pitch_Sensor),-(Roll_Sensor),Yaw_Sensor,
 						 -(GYRO_X-GYROxIdle),(GYRO_Y-GYROyIdle),-(GYRO_Z-GYROzIdle),
 						 &Pitch_PID,&Roll_PID,&Yaw_PID);
 }

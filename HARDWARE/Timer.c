@@ -72,6 +72,7 @@ void TIM2_IRQHandler(void){//T=2000us
 		static unsigned char Tim2Cntr;
 		
 		WithoutDream=!(RC_Com(7,600));//THE UAV WILL FALL LIKES A SALTED FISH WITHOUT DREAM
+		
 		if(RC_Com(3,600)){//ONLY WHEN THE THROTTLE ON THE BOTTOM THE UAV CAN BE UNLOCKED
 			IfUnlock=RC_Com(6,1600);
 			pidPitchAngle.Integral	= 0;
@@ -80,6 +81,22 @@ void TIM2_IRQHandler(void){//T=2000us
 			pidPitchAngularRate.Integral	= 0;
 			pidRollAngularRate.Integral		= 0;
 			pidYawAngularRate.Integral		= 0;
+		}
+		
+		if(RC_Com(5,1600)){
+			PitchIdle_All += Pitch_Sensor;
+			PitchIdle = PitchIdle_All / PitchIdleCntr++;
+			RollIdle_All += Roll_Sensor;
+			RollIdle = RollIdle_All / RollIdleCntr++;
+		}
+		
+		if(RC_Com(5,1800)){
+			PitchIdle = 0;
+			PitchIdle_All = 0;
+			PitchIdleCntr = 1;
+			RollIdle = 0;
+			RollIdle_All = 0;
+			RollIdleCntr = 1;
 		}
 		
 		if(++Tim2Cntr>=40)//CHANGE LED TO SHOW THE STATE OF TIM2
@@ -107,11 +124,8 @@ void TIM5_IRQHandler(void){//T=20000us,20ms
 	if (TIM_GetITStatus(TIM5, TIM_IT_Update) != RESET){
 		short RC3=RM_CH_Length[3]-600;//CH3:600-1100-1600us
 		READ_MPU9250_GYRO();
-		CalcPitch(0);
-		CalcRoll(0);
-		CalcPitch(1);
-		CalcRoll(1);
-		CalcYaw(1);
+		CalcAttitude(0);
+		CalcAttitude(1);
 		
 		SelfStability(0,0,0);
 		
