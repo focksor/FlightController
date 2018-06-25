@@ -4,7 +4,6 @@
 #include "stm32f10x.h"
 #include "sys.h"
 #include "config.h"
-#include "INIT.h"
 #include "data.h"
 
 #include "delay.h"
@@ -13,12 +12,19 @@
 #include "key.h"
 #include "MOTOR.h"
 #include "IIC.h"
-#include "MPU9250.h"
+#include "MPU6050.h"
+#include "inv_mpu.h"
 #include "exti.h"
-#include "RM.h"
+#include "rc_ppm.h"
 #include "LED.h"
 #include "Timer.h"
-#include "Attitude.h"
-//#include "PID.h"
+
+#include <imu.h>
+#include <control.h>
+
+void init_All(void);
+void display_Debug_Info(void);
+
+extern short heartbeat;
 
 #endif	/* __FlightCtrl_H */

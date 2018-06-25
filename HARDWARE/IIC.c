@@ -153,7 +153,7 @@ bool Single_Write(unsigned char SlaveAddress,unsigned char REG_Address,unsigned 
 	MPU_IIC_Wait_Ack();	
 	MPU_IIC_Stop(); 
 	__NOP();
-	return TRUE;
+	return true;
 }//bool Single_Write(unsigned char SlaveAddress,unsigned char REG_Address,unsigned char REG_data);
 
 unsigned char Single_Read(unsigned char SlaveAddress,unsigned char REG_Address){

@@ -23,7 +23,30 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x_it.h" 
+#include "flight.h"
 
+short heartbeat = 0;
+
+void TIM5_IRQHandler(void) {    // 2.5ms
+    
+    short motor_1 = 0, motor_2 = 0, motor_3 = 0, motor_4 = 0;
+
+	if (TIM_GetITStatus(TIM5, TIM_IT_Update) != RESET){
+        if (update_IMU_Data() == true) {
+            
+            refine_RC_PPM_Data();
+            control_All(mode_stabilized, &motor_1, &motor_2, &motor_3, &motor_4);
+            MOTOR_Set(motor_1, motor_2, motor_3, motor_4);
+            
+        }
+        update_TimeSlice(heartbeat);
+        heartbeat++;
+        if (heartbeat > 400)
+            heartbeat = 0;
+	}
+	TIM_ClearITPendingBit(TIM5, TIM_IT_Update);  //清除TIMx更新中断标志 
+
+}//void TIM5_IRQHandler(void);
 
  
 void NMI_Handler(void)

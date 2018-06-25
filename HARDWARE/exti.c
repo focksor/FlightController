@@ -4,7 +4,7 @@ void EXTIX_Init(void){
 	EXTI_InitTypeDef EXTI_InitStructure;
 	NVIC_InitTypeDef NVIC_InitStructure;
 	
-	RM_Init();
+	//RM_Init();
 	
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO,ENABLE);	//使能复用功能时钟
 

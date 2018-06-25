@@ -2,14 +2,14 @@
 #define __RM_H
 
 #include "config.h"
-#include "lcd.h"
+#include "delay.h"
 #include "MOTOR.h"
 #include "stdlib.h"
 #include "stm32f10x.h"
 
-extern unsigned char CH_Def;
+void RC_PPM_Init(void);
+void refine_RC_PPM_Data(void);
 
-void RM_Init(void);
-unsigned char RC_Com(unsigned char,unsigned short);
+extern __rc_channel rc, rc_last;
 
 #endif

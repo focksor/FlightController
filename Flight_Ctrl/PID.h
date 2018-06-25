@@ -2,9 +2,9 @@
 #define __PID_H
 
 #include "data.h"
-#include "MPU9250.h"
+#include "MPU6050.h"
 #include "motor.h"
-#include "RM.h"
+#include "rc_ppm.h"
 
 typedef struct{
 	float exp;

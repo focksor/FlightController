@@ -1,7 +1,7 @@
 #include "motor.h"
 
-unsigned char WithoutDream=0;
-unsigned char IfUnlock=0;
+bool WithoutDream = false;
+bool IfUnlock = false;
 
 void MOTOR_Init(){
 	GPIO_InitTypeDef GPIO_InitStructure;
@@ -57,5 +57,6 @@ int MOTOR_Set(unsigned short MOTOR1_Def,unsigned short MOTOR2_Def,unsigned short
 		TIM4->CCR3 = Motor_PWM_Idle - 100;
 		TIM4->CCR4 = Motor_PWM_Idle - 100;
 	}
+        
 	return 0;
 }//int MOTOR_Set(unsigned short MOTOR1_Def,unsigned short MOTOR2_Def,unsigned short MOTOR3_Def,unsigned short MOTOR4_Def);
